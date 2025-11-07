@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>لجنه الانشطه و المسبقات - نظام دوري ومسابقة</title>
+<style>
+  :root{
+    --bg-1: #1b0f2b;    /* dark purple */
+    --bg-2: #2f2350;    /* mid purple */
+    --accent: #7b61ff;
+    --muted: #bfc8eb;
+    --card: rgba(255,255,255,0.03);
+    --green: #d4f8d4;
+    --red: #f8d4d4;
+    --glass: rgba(255,255,255,0.04);
+  }
+  html,body{height:100%;margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));color:#eef2ff;direction:rtl}
+  /* top nav */
+  .topnav{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:10px 18px;background:linear-gradient(90deg,rgba(0,0,0,0.25),rgba(255,255,255,0.02));position:sticky;top:0;z-index:50;backdrop-filter:blur(6px)}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#4e2ea6,#2a0f44);box-shadow:0 6px 18px rgba(0,0,0,0.5);}
+  .logo span{font-size:20px}
+  .sitename{font-weight:700;font-size:16px;color:var(--muted)}
+  .navtabs{display:flex;gap:10px;align-items:center}
+  .tabbtn{padding:8px 12px;border-radius:8px;border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted)}
+  .tabbtn.active{background:linear-gradient(90deg,var(--accent),#2ea8ff);color:#fff;box-shadow:0 6px 20px rgba(0,0,0,0.35)}
+  .actions{display:flex;gap:8px;align-items:center}
+
+  /* container & cards */
+  .wrap{max-width:1150px;margin:18px auto;padding:12px}
+  .card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:14px;box-shadow:0 8px 30px rgba(0,0,0,0.45)}
+  label{font-weight:700;color:var(--muted)}
+  input,select,textarea,button{font-size:14px;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#eef2ff}
+  textarea{resize:vertical}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .col{flex:1;min-width:180px}
+  .muted{color:var(--muted);font-size:13px}
+  .primary{background:linear-gradient(90deg,#7b61ff,#2ea8ff);border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+
+  /* groups list */
+  .groups-list{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .group-card{min-width:150px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);cursor:pointer;border:1px solid rgba(255,255,255,0.04);text-align:center}
+  .group-card strong{display:block;font-size:16px;color:#fff}
+
+  /* tabs content */
+  .tabs{margin-top:12px}
+  .tabcontent{display:none;animation:fadeIn 300ms ease both}
+  .tabcontent.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* group view matches */
+  .matches-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  .match{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+  .match .teams{font-weight:700}
+  .small{font-size:13px;color:var(--muted)}
+
+  /* bracket (horizontal classic) */
+  .bracket{display:flex;gap:18px;align-items:flex-start;overflow:auto;padding:10px;margin-top:12px}
+  .bracket-col{display:flex;flex-direction:column;gap:12px;align-items:center}
+  .slot{min-width:220px;background:rgba(0,0,0,0.12);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);text-align:center}
+  .slot .team{padding:6px;border-radius:6px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);margin:6px 0}
+  .slot .controls{display:flex;gap:6px;justify-content:center;margin-top:8px}
+  .slot button{padding:6px 8px;border-radius:6px;border:none;cursor:pointer}
+
+  /* dashboard tables */
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:8px;border:1px solid rgba(255,255,255,0.04);text-align:center}
+  th{background:rgba(255,255,255,0.02);font-weight:700}
+  .winner {background:var(--green);color:#07320a}
+  .loser {background:var(--red);color:#581111}
+
+  /* responsive */
+  @media (max-width:900px){
+    .bracket{gap:8px}
+    .slot{min-width:140px}
+  }
+  @media (max-width:600px){
+    .row{flex-direction:column}
+    .topnav{flex-direction:column;gap:8px;align-items:flex-start}
+    .navtabs{width:100%;display:flex;overflow:auto}
+  }
+
+  /* little helpers */
+  .center{text-align:center}
+  .inline{display:inline-block}
+  .space{height:10px}
+  .saved-note{font-size:13px;color:#b9d1ff;margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="topnav">
+    <div class="brand">
+      <div class="logo"><span>⚽</span></div>
+      <div>
+        <div class="sitename">لجنه الانشطه و المسبقات</div>
+        <div class="small muted" style="font-size:12px">نظام دوري + كأس — متجاوب وذكي</div>
+      </div>
+    </div>
+
+    <div class="navtabs" role="tablist" aria-label="الصفحات">
+      <button class="tabbtn active" data-tab="tab-groups">🏁 تقسيم المجموعات</button>
+      <button class="tabbtn" data-tab="tab-bracket">🌳 شجرة الكأس</button>
+      <button class="tabbtn" data-tab="tab-dashboard">📊 الداشبورد</button>
+    </div>
+
+    <div class="actions">
+      <button id="saveBtn" class="ghost">💾 حفظ</button>
+      <button id="loadBtn" class="ghost">📂 استرجاع</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- Groups Tab -->
+    <div id="tab-groups" class="tabcontent active">
+      <div class="card">
+        <div class="row">
+          <div class="col">
+            <label>عدد الفرق (كلي)</label>
+            <input id="inputTotal" type="number" min="2" value="16" />
+            <div class="small muted">مثال: 8, 12, 16, 20</div>
+          </div>
+          <div class="col">
+            <label>فرق بكل مجموعة (اختياري)</label>
+            <input id="inputPerGroup" type="number" min="2" placeholder="اتركه ليُحسب تلقائياً" />
+            <div class="small muted">لو فاضي سيقسم تلقائياً بشكل متقارب</div>
+          </div>
+          <div class="col" style="display:flex;align-items:flex-end;gap:8px">
+            <button id="btnCreate" class="primary">إنشاء المجموعات</button>
+            <button id="btnDemo" class="ghost">ملأ تجريبي</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="teamsInputCard" class="card" style="display:none">
+        <label>أدخل أسماء الفرق (سطر لكل فريق)</label>
+        <textarea id="teamsText" placeholder="مثال: الاهلي"></textarea>
+        <div style="text-align:left;margin-top:8px">
+          <button id="btnAutoAssign" class="primary">توزيع تلقائي</button>
+          <button id="btnManualAssign" class="ghost">توزيع يدوي</button>
+          <span class="saved-note" id="assignNote"></span>
+        </div>
+      </div>
+
+      <div id="groupsOverview" class="card" style="display:none">
+        <label>المجموعات</label>
+        <div class="groups-list" id="groupsList"></div>
+        <div class="small muted">اضغط اسم المجموعة لعرض تفاصيلها أسفلاً.</div>
+      </div>
+
+      <div id="groupDetails" class="card" style="display:none">
+        <div class="row">
+          <div class="col">
+            <h3 id="groupTitle">المجموعة A</h3>
+            <div class="small muted" id="groupTeamsLine"></div>
+            <div class="matches-list" id="groupMatches"></div>
+          </div>
+          <div class="col">
+            <h3>ترتيب المجموعة</h3>
+            <table id="groupTable"><thead><tr><th>#</th><th>فريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فرق</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+            <div style="margin-top:8px"><button id="btnToBracketFromGroup" class="primary">إضافة متأهلين للشجرة النهائية</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bracket Tab -->
+    <div id="tab-bracket" class="tabcontent">
+      <div class="card">
+        <h3 class="center">الشجرة النهائية — نظام خروج مباشر (كلاسيكي)</h3>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <label style="align-self:center">المتأهلين من كل مجموعة :</label>
+          <select id="qualifyCount"><option value="1">1</option><option value="2">2</option></select>
+          <button id="btnBuildBracket" class="primary">بناء الشجرة</button>
+        </div>
+
+        <div id="bracketArea" class="bracket" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="tab-dashboard" class="tabcontent">
+      <div class="card">
+        <h3 class="center">الداشبورد — إحصائيات مفصلة</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:300px">
+            <h4 class="center">الفرق الكسبانة</h4>
+            <table id="winnersTable"><thead><tr><th>الفريق</th><th>فوز</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div style="flex:1;min-width:300px">
+            <h4 class="center">الفرق الخسرانة</h4>
+            <table id="losersTable"><thead><tr><th>الفريق</th><th>خسارة</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border-color:rgba(255,255,255,0.04)">
+        <h4>تفصيل المجموعات</h4>
+        <div id="groupsTables" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"></div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/* ========= Utility & state ========= */
+const STORAGE_KEY = 'tournament.state.v1';
+let STATE = { teams: [], groups: [], groupMatches: [], knockout: null };
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+  document.getElementById('saveBtn').textContent = '✅ تم الحفظ';
+  setTimeout(()=>document.getElementById('saveBtn').textContent = '💾 حفظ',1200);
+}
+function loadState() {
+  const s = localStorage.getItem(STORAGE_KEY);
+  if(!s) return false;
+  STATE = JSON.parse(s);
+  renderAfterLoad();
+  document.getElementById('loadBtn').textContent = '✅ تم التحميل';
+  setTimeout(()=>document.getElementById('loadBtn').textContent='📂 استرجاع',1200);
+  return true;
+}
+
+/* compute groups count (balanced) */
+function computeGroups(numTeams, perOpt) {
+  if(perOpt && perOpt >= 2) return Math.max(1, Math.ceil(numTeams / perOpt));
+  // balanced roughly sqrt approach but ensure min group size 2
+  let g = Math.round(Math.sqrt(numTeams));
+  if(g < 2) g = 2;
+  while(Math.ceil(numTeams / g) < 2) g--;
+  while(g > numTeams) g = numTeams;
+  return g;
+}
+
+/* ---------- UI Tab switching ---------- */
+document.querySelectorAll('.tabbtn').forEach(btn=>{
+  btn.addEventListener('click', ()=> {
+    document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tabcontent').forEach(tc=>tc.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    if(tab === 'tab-bracket') renderBracketArea();
+    if(tab === 'tab-dashboard') renderDashboard();
+  });
+});
+
+/* ---------- create groups flow ---------- */
+document.getElementById('btnCreate').onclick = ()=>{
+  const total = Math.max(2, parseInt(document.getElementById('inputTotal').value || 0));
+  const per = parseInt(document.getElementById('inputPerGroup').value || 0) || null;
+  const groupsCount = computeGroups(total, per);
+  // prepare state skeleton
+  STATE = { teams: [], groups: Array.from({length:groupsCount}, ()=>[]), groupMatches: [], knockout: null };
+  saveState();
+  // show input
+  document.getElementById('teamsInputCard').style.display = 'block';
+  document.getElementById('groupsOverview').style.display = 'none';
+  document.getElementById('groupDetails').style.display = 'none';
+  document.getElementById('assignNote').textContent = `تم إنشاء ${groupsCount} مجموعات — الآن أدخل ${total} أسماء.`;
+  scrollToElement('teamsInputCard');
+};
+
+document.getElementById('btnDemo').onclick = ()=>{
+  document.getElementById('inputTotal').value = 16;
+  document.getElementById('teamsText').value = `الأهلي\nالزمالك\nبيراميدز\nسموحة\nالمصري\nانبي\nالمقاولون\nالاتحاد\nالاتحاد السكندري\nالإسماعيلي\nطلائع الجيش\nمصر المقاصة\nحرس الحدود\nفريق أ\nفريق ب\nفريق ج`;
+  document.getElementById('teamsInputCard').style.display='block';
+  document.getElementById('assignNote').textContent='ملأ تجريبي — اضغط توزيع تلقائي';
+};
+
+/* assign teams automatically */
+document.getElementById('btnAutoAssign').onclick = ()=>{
+  const txt = document.getElementById('teamsText').value.trim();
+  if(!txt) return alert('أدخل أسماء الفرق.');
+  const names = txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  const totalDeclared = parseInt(document.getElementById('inputTotal').value) || names.length;
+  if(names.length !== totalDeclared){
+    if(!confirm(`عدد الأسطر (${names.length}) لا يساوي العدد المدخل (${totalDeclared}). الاستمرار مع ${names.length}؟`)) return;
+  }
+  const groupsCount = STATE.groups.length;
+  STATE.teams = names.map(n=>({ name:n, group:null, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0 }));
+  // round-robin distribution to balance
+  let idx = 0;
+  STATE.groups = Array.from({length:groupsCount}, ()=>[]);
+  STATE.teams.forEach(t=>{
+    const g = idx % groupsCount;
+    STATE.groups[g].push(t.name);
+    t.group = g;
+    idx++;
+  });
+  // schedule group matches (round-robin)
+  scheduleAllGroupMatches();
+  saveState();
+  renderGroupsOverview();
+  document.getElementById('teamsInputCard').style.display='none';
+  document.getElementById('groupsOverview').style.display='block';
+  document.getElementById('groupDetails').style.display='none';
+  scrollToElement('groupsOverview');
+};
+
+/* manual assign opens a simple UI (inline) */
+document.getElementById('btnManualAssign').onclick = ()=>{
+  const txt = document.getElementById('teamsText').value.trim();
+  if(!txt) return alert('أدخل أسماء الفرق.');
+  const names = txt.split('\n').map(s=>s.trim()).filter(Boolean);
+  STATE.teams = names.map(n=>({ name:n, group:null, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0 }));
+  STATE.groups = Array.from({length:STATE.groups.length}, ()=>[]);
+  saveState();
+  // open a simple manual assign prompt per team
+  let remaining = [...STATE.teams.map(t=>t.name)];
+  for(const name of [...remaining]){
+    let g = prompt(`أدخل رقم المجموعة (1..${STATE.groups.length}) لإضافة الفريق "${name}" أو اترك فارغ للتخطي:`);
+    if(g === null) break;
+    g = g.trim();
+    if(!g) continue;
+    const gi = parseInt(g) - 1;
+    if(isNaN(gi) || gi<0 || gi>=STATE.groups.length) { alert('رقم مجموعة غير صحيح'); continue; }
+    STATE.groups[gi].push(name);
+    STATE.teams.find(t=>t.name===name).group = gi;
+  }
+  scheduleAllGroupMatches();
+  saveState();
+  renderGroupsOverview();
+  document.getElementById('teamsInputCard').style.display='none';
+  document.getElementById('groupsOverview').style.display='block';
+  scrollToElement('groupsOverview');
+};
+
+/* render groups overview */
+function renderGroupsOverview(){
+  const list = document.getElementById('groupsList');
+  list.innerHTML = '';
+  STATE.groups.forEach((g, i)=>{
+    const div = document.createElement('div'); div.className='group-card';
+    div.innerHTML = `<strong>المجموعة ${String.fromCharCode(65+i)}</strong><div class="small muted">${g.length} فريق</div>`;
+    div.onclick = ()=> showGroupDetails(i);
+    list.appendChild(div);
+  });
+}
+
+/* schedule round-robin matches for each group */
+function scheduleAllGroupMatches(){
+  STATE.groupMatches = STATE.groupMatches || [];
+  // remove existing matches and rebuild
+  STATE.groupMatches = [];
+  let id = 1;
+  STATE.groups.forEach((grp, gi)=>{
+    for(let i=0;i<grp.length;i++){
+      for(let j=i+1;j<grp.length;j++){
+        STATE.groupMatches.push({ id: id++, group: gi, home: grp[i], away: grp[j], hg:0, ag:0, finished:false });
+      }
+    }
+  });
+}
+
+/* show details of a group */
+function showGroupDetails(gi){
+  const teams = STATE.groups[gi] || [];
+  document.getElementById('groupTitle').textContent = `المجموعة ${String.fromCharCode(65+gi)}`;
+  document.getElementById('groupTeamsLine').textContent = teams.join(' — ') || 'لا توجد فرق';
+  // render matches
+  const matchesDiv = document.getElementById('groupMatches'); matchesDiv.innerHTML = '';
+  const matches = STATE.groupMatches.filter(m => m.group === gi);
+  if(matches.length === 0) matchesDiv.innerHTML = '<div class="small muted">لا توجد مباريات مجدولة.</div>';
+  matches.forEach(m=>{
+    const d = document.createElement('div'); d.className='match';
+    d.innerHTML = `<div class="teams">${m.home} <span style="opacity:0.6">vs</span> ${m.away}</div>
+                   <div>
+                     ${m.finished ? `<span class="small muted">${m.hg} - ${m.ag}</span>` : `<button class="primary inline" data-id="${m.id}">إنهاء الماتش</button>`}
+                     <button class="ghost inline" data-edit="${m.id}">تعديل</button>
+                   </div>`;
+    matchesDiv.appendChild(d);
+  });
+  // handlers
+  matchesDiv.querySelectorAll('button.primary').forEach(b=>{
+    b.onclick = ()=> { const id = parseInt(b.dataset.id); endGroupMatch(id); };
+  });
+  matchesDiv.querySelectorAll('button.ghost').forEach(b=>{
+    b.onclick = ()=> { const id = parseInt(b.dataset.edit); editMatchTeams(id); };
+  });
+  // render standings table
+  renderGroupTable(gi);
+  document.getElementById('groupDetails').style.display='block';
+  scrollToElement('groupDetails');
+}
+
+/* end group match with prompt for goals */
+function endGroupMatch(matchId){
+  const m = STATE.groupMatches.find(x=>x.id===matchId);
+  if(!m) return alert('مباراة غير موجودة');
+  const hg = prompt(`أهداف ${m.home}:`, m.hg || 0);
+  if(hg === null) return;
+  const ag = prompt(`أهداف ${m.away}:`, m.ag || 0);
+  if(ag === null) return;
+  m.hg = parseInt(hg) || 0; m.ag = parseInt(ag) || 0; m.finished = true;
+  // record stats (we will recompute whole table from finished matches for accuracy)
+  recomputeTeamsFromMatches();
+  saveState();
+  showGroupDetails(m.group);
+  renderDashboard();
+}
+
+/* edit teams in a match */
+function editMatchTeams(matchId){
+  const m = STATE.groupMatches.find(x=>x.id===matchId);
+  if(!m) return alert('مباراة غير موجودة');
+  const h = prompt('اسم الفريق الأول:', m.home || '');
+  const a = prompt('اسم الفريق الثاني:', m.away || '');
+  if(h===null || a===null) return;
+  m.home = h.trim() || m.home; m.away = a.trim() || m.away;
+  saveState();
+  showGroupDetails(m.group);
+}
+
+/* recompute all teams stats from finished matches */
+function recomputeTeamsFromMatches(){
+  // initialize or find all team names
+  const names = new Set();
+  STATE.groups.forEach(g=>g.forEach(n=>names.add(n)));
+  (STATE.groupMatches||[]).forEach(m=>{ names.add(m.home); names.add(m.away); });
+  // ensure STATE.teams entries exist
+  STATE.teams = Array.from(names).map(n=>{
+    const existing = (STATE.teams||[]).find(t=>t.name===n);
+    if(existing) return { ...{name:n,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0,group: existing.group ?? findGroupOfTeam(n) }, ...existing, played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0 };
+    return { name:n, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0, group: findGroupOfTeam(n) };
+  });
+  // reset stats
+  STATE.teams.forEach(t=>{ t.played=0; t.win=0; t.draw=0; t.loss=0; t.gf=0; t.ga=0; t.pts=0; });
+  // apply group matches
+  (STATE.groupMatches||[]).filter(m=>m.finished).forEach(m=>{
+    const H = STATE.teams.find(t=>t.name===m.home);
+    const A = STATE.teams.find(t=>t.name===m.away);
+    if(!H || !A) return;
+    H.played++; A.played++;
+    H.gf += m.hg; H.ga += m.ag;
+    A.gf += m.ag; A.ga += m.hg;
+    if(m.hg > m.ag){ H.win++; H.pts += 3; A.loss++; }
+    else if(m.hg < m.ag){ A.win++; A.pts += 3; H.loss++; }
+    else { H.draw++; A.draw++; H.pts++; A.pts++; }
+  });
+  // knockout stats will also be applied from STATE.knockout.rounds if exist
+  if(STATE.knockout && STATE.knockout.rounds){
+    STATE.knockout.rounds.flat().filter(s=>s && s.finished && s.home && s.away).forEach(s=>{
+      const H = STATE.teams.find(t=>t.name===s.home) || {name:s.home,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0};
+      const A = STATE.teams.find(t=>t.name===s.away) || {name:s.away,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0};
+      // if not in STATE.teams add
+      if(!STATE.teams.find(t=>t.name===s.home)) STATE.teams.push(H);
+      if(!STATE.teams.find(t=>t.name===s.away)) STATE.teams.push(A);
+      H.played++; A.played++;
+      H.gf += s.hg; H.ga += s.ag;
+      A.gf += s.ag; A.ga += s.hg;
+      if(s.hg > s.ag){ H.win++; H.pts += 3; A.loss++; }
+      else if(s.hg < s.ag){ A.win++; A.pts += 3; H.loss++; }
+      else { H.draw++; A.draw++; H.pts++; A.pts++; }
+    });
+  }
+}
+
+/* find group index of a team */
+function findGroupOfTeam(name){
+  for(let i=0;i<STATE.groups.length;i++){
+    if(STATE.groups[i].includes(name)) return i;
+  }
+  return null;
+}
+
+/* render group table */
+function renderGroupTable(gi){
+  recomputeTeamsFromMatches();
+  const tbody = document.querySelector('#groupTable tbody'); tbody.innerHTML = '';
+  const groupNames = STATE.groups[gi] || [];
+  const rows = STATE.teams.filter(t=>t.group === gi).map(t=>({ ...t, gd: t.gf - t.ga }));
+  // sometimes STATE.teams may not have group set, so ensure using groupNames
+  if(rows.length === 0 && groupNames.length>0){
+    // create placeholder rows
+    groupNames.forEach((n,idx)=> tbody.innerHTML += `<tr><td>${idx+1}</td><td>${n}</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>`);
+    return;
+  }
+  rows.sort((a,b)=> b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf || a.name.localeCompare(b.name));
+  rows.forEach((r, i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${r.name}</td><td>${r.played}</td><td>${r.win}</td><td>${r.draw}</td><td>${r.loss}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gf - r.ga}</td><td>${r.pts}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Bracket building & rendering ---------- */
+document.getElementById('btnBuildBracket').onclick = ()=> {
+  const qual = parseInt(document.getElementById('qualifyCount').value) || 1;
+  // take top qualifiers from each group based on standings
+  recomputeTeamsFromMatches();
+  const qualifiers = [];
+  STATE.groups.forEach((grp, gi)=>{
+    const stats = (STATE.teams.filter(t=>t.group===gi) || []).slice();
+    stats.sort((a,b)=> b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf);
+    for(let i=0;i<qual && i<stats.length;i++) qualifiers.push(stats[i].name);
+  });
+  if(qualifiers.length < 2) return alert('لا يوجد عدد كافٍ من المتأهلين.');
+  buildKnockout(qualifiers);
+  renderBracketArea();
+  // switch to bracket tab
+  document.querySelector('[data-tab="tab-bracket"]').click();
+  saveState();
+};
+
+function buildKnockout(qualifiers){
+  // power of two
+  let n = qualifiers.length; let pow = 1; while(pow < n) pow *= 2;
+  const slots = pow / 2;
+  const rounds = [];
+  // first round pairing 1 vs last, 2 vs last-1...
+  const first = [];
+  for(let i=0;i<slots;i++){
+    const a = qualifiers[i] || null;
+    const b = qualifiers[qualifiers.length - 1 - i] || null;
+    first.push({ home: a, away: b, hg:0, ag:0, finished:false, id:`r0s${i}` });
+  }
+  rounds.push(first);
+  let rem = slots / 2; let r = 1;
+  while(rem >= 1){
+    rounds.push(Array.from({length:rem}, (_,i)=>({ home:null, away:null, hg:0, ag:0, finished:false, id:`r${r}s${i}`})));
+    rem = Math.floor(rem/2); r++;
+  }
+  STATE.knockout = { rounds };
+}
+
+/* render bracket area */
+function renderBracketArea(){
+  const area = document.getElementById('bracketArea'); area.innerHTML = '';
+  if(!STATE.knockout || !STATE.knockout.rounds){ area.innerHTML = '<div class="small muted">لا توجد شجرة حالياً — أنشأ المتأهلين ثم اضغط بناء الشجرة.</div>'; return; }
+  const rounds = STATE.knockout.rounds;
+  rounds.forEach((rnd, ri)=>{
+    const col = document.createElement('div'); col.className = 'bracket-col';
+    const title = document.createElement('div'); title.style.fontWeight='700'; title.textContent = ri === rounds.length-1 ? 'النهائي' : `دور ${ri+1}`;
+    col.appendChild(title);
+    rnd.forEach(slot=>{
+      const box = document.createElement('div'); box.className='slot';
+      const h = slot.home || '—'; const a = slot.away || '—';
+      box.innerHTML = `<div class="team">${h}</div><div style="opacity:0.6;margin:6px 0">vs</div><div class="team">${a}</div>
+        <div class="controls">
+          <button class="primary" data-id="${slot.id}">إنهاء الماتش</button>
+          <button class="ghost" data-edit="${slot.id}">تعديل</button>
+        </div>`;
+      col.appendChild(box);
+    });
+    area.appendChild(col);
+  });
+  // handlers
+  document.querySelectorAll('.slot .primary').forEach(b=>{
+    b.onclick = ()=> {
+      const id = b.dataset.id;
+      const slot = findKnockoutSlotById(id);
+      if(!slot) return alert('خطأ');
+      if(!slot.home || !slot.away) return alert('حدد كلا الفريقين أولاً');
+      const hg = prompt(`أهداف ${slot.home}:`, slot.hg || 0);
+      if(hg === null) return;
+      const ag = prompt(`أهداف ${slot.away}:`, slot.ag || 0);
+      if(ag === null) return;
+      slot.hg = parseInt(hg)||0; slot.ag = parseInt(ag)||0; slot.finished = true;
+      // record stats then advance
+      recomputeTeamsFromMatches(); // ensure teams exist
+      // add stats for this match
+      // (we'll recompute from knockout structure on dashboard render)
+      const winner = slot.hg > slot.ag ? slot.home : (slot.hg < slot.ag ? slot.away : null);
+      if(winner) advanceKnockout(slot.id, winner);
+      saveState();
+      renderBracketArea();
+      renderDashboard();
+    };
+  });
+  document.querySelectorAll('.slot .ghost').forEach(b=>{
+    b.onclick = ()=> {
+      const id = b.dataset.edit; const slot = findKnockoutSlotById(id);
+      if(!slot) return;
+      const h = prompt('اسم الفريق الأول:', slot.home || '');
+      const a = prompt('اسم الفريق الثاني:', slot.away || '');
+      if(h === null || a === null) return;
+      slot.home = h.trim() || slot.home; slot.away = a.trim() || slot.away;
+      saveState(); renderBracketArea();
+    };
+  });
+}
+function findKnockoutSlotById(id){
+  if(!STATE.knockout) return null;
+  for(const rnd of STATE.knockout.rounds) for(const s of rnd) if(s.id === id) return s;
+  return null;
+}
+function advanceKnockout(slotId, winner){
+  for(let r=0;r<STATE.knockout.rounds.length;r++){
+    const idx = STATE.knockout.rounds[r].findIndex(s=>s.id === slotId);
+    if(idx !== -1){
+      const next = r+1;
+      if(next < STATE.knockout.rounds.length){
+        const target = STATE.knockout.rounds[next][Math.floor(idx/2)];
+        if(!target.home) target.home = winner;
+        else if(!target.away) target.away = winner;
+        else target.home = winner;
+        saveState();
+      } else {
+        alert('الفائز النهائي: ' + winner);
+      }
+      break;
+    }
+  }
+}
+
+/* ---------- Dashboard rendering ---------- */
+function renderDashboard(){
+  recomputeTeamsFromMatches();
+  // winners/losers
+  const winnersBody = document.querySelector('#winnersTable tbody'); winnersBody.innerHTML = '';
+  const losersBody = document.querySelector('#losersTable tbody'); losersBody.innerHTML = '';
+  const arr = STATE.teams.slice();
+  const winners = arr.filter(t=>t.win > t.loss).sort((a,b)=>b.pts - a.pts);
+  const losers = arr.filter(t=>t.loss > t.win).sort((a,b)=>b.loss - a.loss);
+  winners.forEach(w=> winnersBody.innerHTML += `<tr class="winner"><td>${w.name}</td><td>${w.win}</td><td>${w.pts}</td></tr>`);
+  losers.forEach(l=> losersBody.innerHTML += `<tr class="loser"><td>${l.name}</td><td>${l.loss}</td><td>${l.pts}</td></tr>`);
+  // groups tables
+  const groupsTables = document.getElementById('groupsTables'); groupsTables.innerHTML = '';
+  STATE.groups.forEach((grp, gi)=>{
+    const box = document.createElement('div'); box.style.minWidth='320px'; box.style.flex='1';
+    let rows = STATE.teams.filter(t=>t.group === gi).map(t=>({...t, gd: t.gf - t.ga}));
+    if(rows.length === 0){
+      // create placeholder from group list
+      rows = grp.map(n=>({ name:n, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0, gd:0 }));
+    } else {
+      rows.sort((a,b)=> b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf);
+    }
+    box.innerHTML = `<div class="card"><h4 class="center">المجموعة ${String.fromCharCode(65+gi)}</h4>
+      <table><thead><tr><th>الفريق</th><th>نقاط</th><th>له</th><th>عليه</th><th>فرق</th></tr></thead>
+      <tbody>${rows.map(r=>`<tr><td>${r.name}</td><td>${r.pts}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gf - r.ga}</td></tr>`).join('')}</tbody></table></div>`;
+    groupsTables.appendChild(box);
+  });
+}
+
+/* ---------- helpers & lifecycle ---------- */
+function scrollToElement(id){ document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'}); }
+
+/* initial load */
+(function init(){
+  const loaded = loadState();
+  if(!loaded){
+    // empty initial state shown
+    STATE = { teams: [], groups: [], groupMatches: [], knockout: null };
+  } else {
+    // if state loaded, render overview
+    renderGroupsOverview();
+  }
+})();
+
+/* save/load buttons */
+document.getElementById('saveBtn').addEventListener('click', saveState);
+document.getElementById('loadBtn').addEventListener('click', ()=> { if(!loadState()) alert('لا توجد بيانات محفوظة.'); });
+
+/* render after load (populate UI) */
+function renderAfterLoad(){
+  if(!STATE) return;
+  // show groups overview if groups exist
+  if(STATE.groups && STATE.groups.length > 0){
+    document.getElementById('groupsOverview').style.display='block';
+    renderGroupsOverview();
+  }
+  // schedule matches if not present
+  if(!STATE.groupMatches || STATE.groupMatches.length === 0){
+    scheduleAllGroupMatches();
+    saveState();
+  }
+  renderDashboard();
+}
+
+/* ensure recompute / render when tab changed manually to dashboard */
+document.querySelector('[data-tab="tab-dashboard"]').addEventListener('click', ()=> renderDashboard());
+
+</script>
+</body>
+</html>
