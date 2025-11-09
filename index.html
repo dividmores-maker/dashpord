@@ -500,205 +500,162 @@
   }
 </style>
 </head>
-
+<script src="app.js"></script
 <body>
 
-  <!-- LOGIN WRAPPER -->
-  <div id="loginWrap" class="login-wrap">
-    <div class="login-card" role="dialog" aria-labelledby="loginTitle">
-      <div class="login-head">
-        <img src="logo.png" alt="لجنة الأنشطة والمسابقات" class="login-logo"
-          style="width:64px;height:64px;border-radius:12px;">
+<!-- LOGIN WRAPPER -->
+<div id="loginWrap" class="login-wrap">
+  <div class="login-card" role="dialog" aria-labelledby="loginTitle">
+    <div class="login-head">
+      <img src="logo.png" alt="لجنة الأنشطة والمسابقات" class="login-logo" style="width:64px;height:64px;border-radius:12px;">
 
-        <div>
-          <div id="loginTitle" class="login-title">دخول لوحة إدارة و عرض — لجنه الانشطه و المسبقات</div>
-          <div class="login-sub">اختر دورك. المشاهد يرى الداشبورد فقط. لجنة التنظيم تحتاج كلمة سر للوصول الكامل.</div>
-        </div>
+      <div>
+        <div id="loginTitle" class="login-title">دخول لوحة إدارة و عرض — لجنه الانشطه و المسبقات</div>
+        <div class="login-sub">اختر دورك. المشاهد يرى الداشبورد فقط. لجنة التنظيم تحتاج كلمة سر للوصول الكامل.</div>
+      </div>
+    </div>
+
+    <div class="login-body">
+      <div class="login-column">
+        <label style="font-weight:700;margin-bottom:8px;display:block">دخول كمشاهد</label>
+        <button id="btnViewer" class="role-btn role-view">مشاهد — عرض الداشبورد فقط</button>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">المشاهد لن يستطيع تعديل أو الوصول لأدوات التحكم.</div>
       </div>
 
-      <div class="login-body">
-        <div class="login-column">
-          <label style="font-weight:700;margin-bottom:8px;display:block">دخول كمشاهد</label>
-          <button id="btnViewer" class="role-btn role-view">مشاهد — عرض الداشبورد فقط</button>
-          <div style="margin-top:10px;color:var(--muted);font-size:13px">المشاهد لن يستطيع تعديل أو الوصول لأدوات
-            التحكم.</div>
+      <div class="login-column">
+        <label style="font-weight:700;margin-bottom:8px;display:block">دخول كلجنة التنظيم</label>
+        <button id="btnAdminShow" class="role-btn role-admin">لجنة التنظيم — أطلب كلمة السر</button>
+        <div class="pass-row" id="passRow" style="display:none;">
+          <input id="adminPass" class="pass-input" type="password" placeholder="أدخل كلمة المرور">
+          <button id="btnAdmin" class="pass-submit">دخول</button>
         </div>
-
-        <div class="login-column">
-          <label style="font-weight:700;margin-bottom:8px;display:block">دخول كلجنة التنظيم</label>
-          <button id="btnAdminShow" class="role-btn role-admin">لجنة التنظيم — أطلب كلمة السر</button>
-          <div class="pass-row" id="passRow" style="display:none;">
-            <input id="adminPass" class="pass-input" type="password" placeholder="أدخل كلمة المرور">
-            <button id="btnAdmin" class="pass-submit">دخول</button>
-          </div>
-          <div style="margin-top:10px;color:var(--muted);font-size:13px">كلمة المرور المطلوبة: <strong>P@ssw0rd</strong>
-          </div>
-        </div>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">كلمة المرور المطلوبة: <strong>P@ssw0rd</strong></div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- MAIN APP (محتوى التطبيق الأصلي) -->
-  <div id="appContainer" class="hidden">
-    <!-- ==== START: Original app content (topnav, wrap, all UI) ==== -->
-    <!-- I'm embedding your original app UI & JS here (kept intact). -->
-    <!-- Top nav + app content -->
-    <div class="topnav">
-      <div class="brand">
-        <img src="logo.png" alt="لجنة الأنشطة والمسابقات" class="main-logo"
-          style="width:42px;height:42px;border-radius:10px;">
+<!-- MAIN APP (محتوى التطبيق الأصلي) -->
+<div id="appContainer" class="hidden">
+  <!-- ==== START: Original app content (topnav, wrap, all UI) ==== -->
+  <!-- I'm embedding your original app UI & JS here (kept intact). -->
+  <!-- Top nav + app content -->
+  <div class="topnav">
+    <div class="brand">
+      <img src="logo.png" alt="لجنة الأنشطة والمسابقات" class="main-logo" style="width:42px;height:42px;border-radius:10px;">
 
-        <div>
-          <div class="sitename">لجنه الانشطه و المسبقات</div>
-          <div class="small muted" style="font-size:12px">نظام دوري + كأس — متجاوب وذكي</div>
-        </div>
-      </div>
-
-      <div class="navtabs" role="tablist" aria-label="الصفحات">
-        <button class="tabbtn active" data-tab="tab-groups">🏁 تقسيم المجموعات</button>
-        <button class="tabbtn" data-tab="tab-bracket">🌳 شجرة الكأس</button>
-        <button class="tabbtn" data-tab="tab-dashboard">📊 الداشبورد</button>
-      </div>
-
-      <div class="actions">
-        <button id="saveBtn" class="ghost">💾 حفظ</button>
-        <button id="loadBtn" class="ghost">📂 استرجاع</button>
+      <div>
+        <div class="sitename">لجنه الانشطه و المسبقات</div>
+        <div class="small muted" style="font-size:12px">نظام دوري + كأس — متجاوب وذكي</div>
       </div>
     </div>
 
-    <div class="wrap">
-      <!-- Groups Tab -->
-      <div id="tab-groups" class="tabcontent active">
-        <div class="card">
-          <div class="row">
-            <div class="col">
-              <label>عدد الفرق (كلي)</label>
-              <input id="inputTotal" type="number" min="2" value="16" />
-              <div class="small muted">مثال: 8, 12, 16, 20</div>
-            </div>
-            <div class="col">
-              <label>فرق بكل مجموعة (اختياري)</label>
-              <input id="inputPerGroup" type="number" min="2" placeholder="اتركه ليُحسب تلقائياً" />
-              <div class="small muted">لو فاضي سيقسم تلقائياً بشكل متقارب</div>
-            </div>
-            <div class="col" style="display:flex;align-items:flex-end;gap:8px">
-              <button id="btnCreate" class="primary">إنشاء المجموعات</button>
-              <button id="btnDemo" class="ghost">ملأ تجريبي</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="teamsInputCard" class="card" style="display:none">
-          <label>أدخل أسماء الفرق (سطر لكل فريق)</label>
-          <textarea id="teamsText" placeholder="مثال: الاهلي"></textarea>
-          <div style="text-align:left;margin-top:8px">
-            <button id="btnAutoAssign" class="primary">توزيع تلقائي</button>
-            <button id="btnManualAssign" class="ghost">توزيع يدوي</button>
-            <span class="saved-note" id="assignNote"></span>
-          </div>
-        </div>
-
-        <div id="groupsOverview" class="card" style="display:none">
-          <label>المجموعات</label>
-          <div class="groups-list" id="groupsList"></div>
-          <div class="small muted">اضغط اسم المجموعة لعرض تفاصيلها أسفلاً.</div>
-        </div>
-
-        <div id="groupDetails" class="card" style="display:none">
-          <div class="row">
-            <div class="col">
-              <h3 id="groupTitle">المجموعة A</h3>
-              <div class="small muted" id="groupTeamsLine"></div>
-              <div class="matches-list" id="groupMatches"></div>
-            </div>
-            <div class="col">
-              <h3>ترتيب المجموعة</h3>
-              <table id="groupTable">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>فريق</th>
-                    <th>لعب</th>
-                    <th>ف</th>
-                    <th>ت</th>
-                    <th>خ</th>
-                    <th>له</th>
-                    <th>عليه</th>
-                    <th>فرق</th>
-                    <th>نقاط</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-              <div style="margin-top:8px"><button id="btnToBracketFromGroup" class="primary">إضافة متأهلين للشجرة
-                  النهائية</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bracket Tab -->
-      <div id="tab-bracket" class="tabcontent">
-        <div class="card">
-          <h3 class="center">الشجرة النهائية — نظام خروج مباشر (كلاسيكي)</h3>
-          <div style="display:flex;gap:8px;justify-content:center">
-            <label style="align-self:center">المتأهلين من كل مجموعة :</label>
-            <select id="qualifyCount">
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
-            <button id="btnBuildBracket" class="primary">بناء الشجرة</button>
-          </div>
-
-          <div id="bracketArea" class="bracket" style="margin-top:12px"></div>
-        </div>
-      </div>
-
-      <!-- Dashboard Tab -->
-      <div id="tab-dashboard" class="tabcontent">
-        <div class="card">
-          <h3 class="center">الداشبورد — إحصائيات مفصلة</h3>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <div style="flex:1;min-width:300px">
-              <h4 class="center">الفرق الكسبانة</h4>
-              <table id="winnersTable">
-                <thead>
-                  <tr>
-                    <th>الفريق</th>
-                    <th>فوز</th>
-                    <th>نقاط</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <div style="flex:1;min-width:300px">
-              <h4 class="center">الفرق الخسرانة</h4>
-              <table id="losersTable">
-                <thead>
-                  <tr>
-                    <th>الفريق</th>
-                    <th>خسارة</th>
-                    <th>نقاط</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-
-          <hr style="margin:12px 0;border-color:rgba(255,255,255,0.04)">
-          <h4>تفصيل المجموعات</h4>
-          <div id="groupsTables" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"></div>
-        </div>
-      </div>
-
+    <div class="navtabs" role="tablist" aria-label="الصفحات">
+      <button class="tabbtn active" data-tab="tab-groups">🏁 تقسيم المجموعات</button>
+      <button class="tabbtn" data-tab="tab-bracket">🌳 شجرة الكأس</button>
+      <button class="tabbtn" data-tab="tab-dashboard">📊 الداشبورد</button>
     </div>
-    <!-- ==== END: Original app content ==== -->
+
+    <div class="actions">
+      <button id="saveBtn" class="ghost">💾 حفظ</button>
+      <button id="loadBtn" class="ghost">📂 استرجاع</button>
+    </div>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
-  <script src="work.js"></script>
 
+  <div class="wrap">
+    <!-- Groups Tab -->
+    <div id="tab-groups" class="tabcontent active">
+      <div class="card">
+        <div class="row">
+          <div class="col">
+            <label>عدد الفرق (كلي)</label>
+            <input id="inputTotal" type="number" min="2" value="16" />
+            <div class="small muted">مثال: 8, 12, 16, 20</div>
+          </div>
+          <div class="col">
+            <label>فرق بكل مجموعة (اختياري)</label>
+            <input id="inputPerGroup" type="number" min="2" placeholder="اتركه ليُحسب تلقائياً" />
+            <div class="small muted">لو فاضي سيقسم تلقائياً بشكل متقارب</div>
+          </div>
+          <div class="col" style="display:flex;align-items:flex-end;gap:8px">
+            <button id="btnCreate" class="primary">إنشاء المجموعات</button>
+            <button id="btnDemo" class="ghost">ملأ تجريبي</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="teamsInputCard" class="card" style="display:none">
+        <label>أدخل أسماء الفرق (سطر لكل فريق)</label>
+        <textarea id="teamsText" placeholder="مثال: الاهلي"></textarea>
+        <div style="text-align:left;margin-top:8px">
+          <button id="btnAutoAssign" class="primary">توزيع تلقائي</button>
+          <button id="btnManualAssign" class="ghost">توزيع يدوي</button>
+          <span class="saved-note" id="assignNote"></span>
+        </div>
+      </div>
+
+      <div id="groupsOverview" class="card" style="display:none">
+        <label>المجموعات</label>
+        <div class="groups-list" id="groupsList"></div>
+        <div class="small muted">اضغط اسم المجموعة لعرض تفاصيلها أسفلاً.</div>
+      </div>
+
+      <div id="groupDetails" class="card" style="display:none">
+        <div class="row">
+          <div class="col">
+            <h3 id="groupTitle">المجموعة A</h3>
+            <div class="small muted" id="groupTeamsLine"></div>
+            <div class="matches-list" id="groupMatches"></div>
+          </div>
+          <div class="col">
+            <h3>ترتيب المجموعة</h3>
+            <table id="groupTable"><thead><tr><th>#</th><th>فريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فرق</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+            <div style="margin-top:8px"><button id="btnToBracketFromGroup" class="primary">إضافة متأهلين للشجرة النهائية</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bracket Tab -->
+    <div id="tab-bracket" class="tabcontent">
+      <div class="card">
+        <h3 class="center">الشجرة النهائية — نظام خروج مباشر (كلاسيكي)</h3>
+        <div style="display:flex;gap:8px;justify-content:center">
+          <label style="align-self:center">المتأهلين من كل مجموعة :</label>
+          <select id="qualifyCount"><option value="1">1</option><option value="2">2</option></select>
+          <button id="btnBuildBracket" class="primary">بناء الشجرة</button>
+        </div>
+
+        <div id="bracketArea" class="bracket" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="tab-dashboard" class="tabcontent">
+      <div class="card">
+        <h3 class="center">الداشبورد — إحصائيات مفصلة</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:300px">
+            <h4 class="center">الفرق الكسبانة</h4>
+            <table id="winnersTable"><thead><tr><th>الفريق</th><th>فوز</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div style="flex:1;min-width:300px">
+            <h4 class="center">الفرق الخسرانة</h4>
+            <table id="losersTable"><thead><tr><th>الفريق</th><th>خسارة</th><th>نقاط</th></tr></thead><tbody></tbody></table>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0;border-color:rgba(255,255,255,0.04)">
+        <h4>تفصيل المجموعات</h4>
+        <div id="groupsTables" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ==== END: Original app content ==== -->
+</div>
+
+<script>
   /* ================== Login / Role control ================== */
   const PASSWORD = '123'; // كلمة المرور لـ لجنة التنظيم
 
@@ -713,564 +670,555 @@
 
   let CURRENT_ROLE = null; // "viewer" or "admin"
 
-  btnViewer.addEventListener('click', ()=> {
-  CURRENT_ROLE = 'viewer';
-  enterAsViewer();
+  btnViewer.addEventListener('click', () => {
+    CURRENT_ROLE = 'viewer';
+    enterAsViewer();
   });
 
-  btnAdminShow.addEventListener('click', ()=> {
-  passRow.style.display = passRow.style.display === 'flex' || passRow.style.display === 'block' ? 'none' : 'flex';
-  if(passRow.style.display === 'flex') adminPass.focus();
+  btnAdminShow.addEventListener('click', () => {
+    passRow.style.display = passRow.style.display === 'flex' || passRow.style.display === 'block' ? 'none' : 'flex';
+    if (passRow.style.display === 'flex') adminPass.focus();
   });
 
-  btnAdmin.addEventListener('click', ()=> {
-  const v = adminPass.value || '';
-  if(v === PASSWORD){
-  CURRENT_ROLE = 'admin';
-  enterAsAdmin();
-  } else {
-  alert('كلمة السر خاطئة.');
-  adminPass.value = '';
-  adminPass.focus();
-  }
+  btnAdmin.addEventListener('click', () => {
+    const v = adminPass.value || '';
+    if (v === PASSWORD) {
+      CURRENT_ROLE = 'admin';
+      enterAsAdmin();
+    } else {
+      alert('كلمة السر خاطئة.');
+      adminPass.value = '';
+      adminPass.focus();
+    }
   });
 
   // When pressing Enter inside password field
-  adminPass.addEventListener('keyup', (e)=> {
-  if(e.key === 'Enter') btnAdmin.click();
+  adminPass.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') btnAdmin.click();
   });
 
-  function enterAsViewer(){
-  // hide login, show app
-  loginWrap.classList.add('hidden');
-  appContainer.classList.remove('hidden');
-  applyViewerMode();
-  // switch to dashboard tab
-  const dashBtn = document.querySelector('[data-tab="tab-dashboard"]');
-  if(dashBtn) dashBtn.click();
+  function enterAsViewer() {
+    // hide login, show app
+    loginWrap.classList.add('hidden');
+    appContainer.classList.remove('hidden');
+    applyViewerMode();
+    // switch to dashboard tab
+    const dashBtn = document.querySelector('[data-tab="tab-dashboard"]');
+    if (dashBtn) dashBtn.click();
   }
 
-  function enterAsAdmin(){
-  loginWrap.classList.add('hidden');
-  appContainer.classList.remove('hidden');
-  applyAdminMode();
-  // open groups tab (admin)
-  const groupsBtn = document.querySelector('[data-tab="tab-groups"]');
-  if(groupsBtn) groupsBtn.click();
+  function enterAsAdmin() {
+    loginWrap.classList.add('hidden');
+    appContainer.classList.remove('hidden');
+    applyAdminMode();
+    // open groups tab (admin)
+    const groupsBtn = document.querySelector('[data-tab="tab-groups"]');
+    if (groupsBtn) groupsBtn.click();
   }
 
   /* ---------- functions to adjust UI per role ---------- */
 
-  function applyViewerMode(){
-  // hide group and bracket tabs from nav
-  document.querySelectorAll('.navtabs .tabbtn').forEach(btn=>{
-  if(btn.dataset.tab !== 'tab-dashboard') btn.style.display = 'none';
-  else btn.style.display = 'inline-flex';
-  });
-  // hide actions except maybe save? for viewer hide save/load
-  document.querySelectorAll('.actions button').forEach(b=> b.style.display = 'none');
+  function applyViewerMode() {
+    // hide group and bracket tabs from nav
+    document.querySelectorAll('.navtabs .tabbtn').forEach(btn => {
+      if (btn.dataset.tab !== 'tab-dashboard') btn.style.display = 'none';
+      else btn.style.display = 'inline-flex';
+    });
+    // hide actions except maybe save? for viewer hide save/load
+    document.querySelectorAll('.actions button').forEach(b => b.style.display = 'none');
 
-  // Hide interactive controls in dashboard and bracket and groups
-  // Disable buttons (just hide control buttons)
-  document.querySelectorAll('button.primary, button.ghost').forEach(b=>{
-  // allow only nothing - but we still keep them visible inside dashboard tables (they're not used there)
-  b.dataset._origDisplay = b.style.display || '';
-  b.style.pointerEvents = 'none'; // disable clicks
-  b.style.opacity = '0.6';
-  });
+    // Hide interactive controls in dashboard and bracket and groups
+    // Disable buttons (just hide control buttons)
+    document.querySelectorAll('button.primary, button.ghost').forEach(b => {
+      // allow only nothing - but we still keep them visible inside dashboard tables (they're not used there)
+      b.dataset._origDisplay = b.style.display || '';
+      b.style.pointerEvents = 'none'; // disable clicks
+      b.style.opacity = '0.6';
+    });
 
-  // Enable interactions that are necessary for dashboard viewing (none needed)
-  // Ensure only dashboard tab is active
-  document.querySelectorAll('.tabcontent').forEach(tc=> tc.classList.remove('active'));
-  const tb = document.getElementById('tab-dashboard');
-  if(tb) tb.classList.add('active');
-  // render dashboard to ensure shown
-  if(typeof renderDashboard === 'function') renderDashboard();
+    // Enable interactions that are necessary for dashboard viewing (none needed)
+    // Ensure only dashboard tab is active
+    document.querySelectorAll('.tabcontent').forEach(tc => tc.classList.remove('active'));
+    const tb = document.getElementById('tab-dashboard');
+    if (tb) tb.classList.add('active');
+    // render dashboard to ensure shown
+    if (typeof renderDashboard === 'function') renderDashboard();
   }
 
-  function applyAdminMode(){
-  // show all navtabs
-  document.querySelectorAll('.navtabs .tabbtn').forEach(btn=> btn.style.display = 'inline-flex');
-  // show actions
-  document.querySelectorAll('.actions button').forEach(b=> b.style.display = 'inline-flex');
-  // re-enable buttons
-  document.querySelectorAll('button.primary, button.ghost').forEach(b=>{
-  b.style.pointerEvents = '';
-  b.style.opacity = '';
-  });
-  // initial render
-  if(typeof renderGroupsOverview === 'function') renderGroupsOverview();
-  if(typeof renderDashboard === 'function') renderDashboard();
+  function applyAdminMode() {
+    // show all navtabs
+    document.querySelectorAll('.navtabs .tabbtn').forEach(btn => btn.style.display = 'inline-flex');
+    // show actions
+    document.querySelectorAll('.actions button').forEach(b => b.style.display = 'inline-flex');
+    // re-enable buttons
+    document.querySelectorAll('button.primary, button.ghost').forEach(b => {
+      b.style.pointerEvents = '';
+      b.style.opacity = '';
+    });
+    // initial render
+    if (typeof renderGroupsOverview === 'function') renderGroupsOverview();
+    if (typeof renderDashboard === 'function') renderDashboard();
   }
 
   /* If user closed login and used back: keep role */
-  window.addEventListener('load', ()=> {
-  // nothing — app will be initialised by original app code below.
+  window.addEventListener('load', () => {
+    // nothing — app will be initialised by original app code below.
   });
 
   /* =============== End of login logic =============== */
 
   /* =============== Original app JS (kept intact) =============== */
   /* Below I embed the app code that you provided (kept but slightly adapted so it works inside this file).
-  All original functions are preserved. If you want further fixes (e.g. UI changes), أخبرني. */
+     All original functions are preserved. If you want further fixes (e.g. UI changes), أخبرني. */
 
   const STORAGE_KEY = 'tournament.state.v1';
   let STATE = { teams: [], groups: [], groupMatches: [], knockout: null };
 
   function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
-  const sb = document.getElementById('saveBtn');
-  if(sb){ sb.textContent = '✅ تم الحفظ'; setTimeout(()=>sb.textContent = '💾 حفظ',1200); }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+    const sb = document.getElementById('saveBtn');
+    if (sb) { sb.textContent = '✅ تم الحفظ'; setTimeout(() => sb.textContent = '💾 حفظ', 1200); }
   }
   function loadState() {
-  const s = localStorage.getItem(STORAGE_KEY);
-  if(!s) return false;
-  STATE = JSON.parse(s);
-  renderAfterLoad();
-  const lb = document.getElementById('loadBtn');
-  if(lb){ lb.textContent = '✅ تم التحميل'; setTimeout(()=>lb.textContent='📂 استرجاع',1200); }
-  return true;
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (!s) return false;
+    STATE = JSON.parse(s);
+    renderAfterLoad();
+    const lb = document.getElementById('loadBtn');
+    if (lb) { lb.textContent = '✅ تم التحميل'; setTimeout(() => lb.textContent = '📂 استرجاع', 1200); }
+    return true;
   }
 
   function computeGroups(numTeams, perOpt) {
-  if(perOpt && perOpt >= 2) return Math.max(1, Math.ceil(numTeams / perOpt));
-  let g = Math.round(Math.sqrt(numTeams));
-  if(g < 2) g=2; while(Math.ceil(numTeams / g) < 2) g--; while(g> numTeams) g = numTeams;
+    if (perOpt && perOpt >= 2) return Math.max(1, Math.ceil(numTeams / perOpt));
+    let g = Math.round(Math.sqrt(numTeams));
+    if (g < 2) g = 2;
+    while (Math.ceil(numTeams / g) < 2) g--;
+    while (g > numTeams) g = numTeams;
     return g;
-    }
+  }
 
-    /* ---------- UI Tab switching ---------- */
-    document.querySelectorAll('.tabbtn').forEach(btn=>{
-    btn.addEventListener('click', ()=> {
-    document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const tab = btn.dataset.tab;
-    document.querySelectorAll('.tabcontent').forEach(tc=>tc.classList.remove('active'));
-    const el = document.getElementById(tab);
-    if(el) el.classList.add('active');
-    if(tab === 'tab-bracket') renderBracketArea();
-    if(tab === 'tab-dashboard') renderDashboard();
+  /* ---------- UI Tab switching ---------- */
+  document.querySelectorAll('.tabbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tabcontent').forEach(tc => tc.classList.remove('active'));
+      const el = document.getElementById(tab);
+      if (el) el.classList.add('active');
+      if (tab === 'tab-bracket') renderBracketArea();
+      if (tab === 'tab-dashboard') renderDashboard();
     });
-    });
+  });
 
-    /* ---------- create groups flow ---------- */
-    const btnCreate = document.getElementById('btnCreate');
-    if(btnCreate) btnCreate.onclick = ()=> {
+  /* ---------- create groups flow ---------- */
+  const btnCreate = document.getElementById('btnCreate');
+  if (btnCreate) btnCreate.onclick = () => {
     const total = Math.max(2, parseInt(document.getElementById('inputTotal').value || 0));
     const per = parseInt(document.getElementById('inputPerGroup').value || 0) || null;
     const groupsCount = computeGroups(total, per);
-    STATE = { teams: [], groups: Array.from({length:groupsCount}, ()=>[]), groupMatches: [], knockout: null };
+    STATE = { teams: [], groups: Array.from({ length: groupsCount }, () => []), groupMatches: [], knockout: null };
     saveState();
     document.getElementById('teamsInputCard').style.display = 'block';
     document.getElementById('groupsOverview').style.display = 'none';
     document.getElementById('groupDetails').style.display = 'none';
     const an = document.getElementById('assignNote');
-    if(an) an.textContent = `تم إنشاء ${groupsCount} مجموعات — الآن أدخل ${total} أسماء.`;
+    if (an) an.textContent = `تم إنشاء ${groupsCount} مجموعات — الآن أدخل ${total} أسماء.`;
     scrollToElement('teamsInputCard');
-    }
+  }
 
-    const btnDemo = document.getElementById('btnDemo');
-    if(btnDemo) btnDemo.onclick = ()=> {
+  const btnDemo = document.getElementById('btnDemo');
+  if (btnDemo) btnDemo.onclick = () => {
     document.getElementById('inputTotal').value = 16;
-    document.getElementById('teamsText').value =
-    `الأهلي\nالزمالك\nبيراميدز\nسموحة\nالمصري\nانبي\nالمقاولون\nالاتحاد\nالاتحاد السكندري\nالإسماعيلي\nطلائع الجيش\nمصر
-    المقاصة\nحرس الحدود\nفريق أ\nفريق ب\nفريق ج`;
-    document.getElementById('teamsInputCard').style.display='block';
+    document.getElementById('teamsText').value = `الأهلي\nالزمالك\nبيراميدز\nسموحة\nالمصري\nانبي\nالمقاولون\nالاتحاد\nالاتحاد السكندري\nالإسماعيلي\nطلائع الجيش\nمصر المقاصة\nحرس الحدود\nفريق أ\nفريق ب\nفريق ج`;
+    document.getElementById('teamsInputCard').style.display = 'block';
     const an = document.getElementById('assignNote');
-    if(an) an.textContent='ملأ تجريبي — اضغط توزيع تلقائي';
-    }
+    if (an) an.textContent = 'ملأ تجريبي — اضغط توزيع تلقائي';
+  }
 
-    /* assign teams automatically */
-    const btnAutoAssign = document.getElementById('btnAutoAssign');
-    if(btnAutoAssign) btnAutoAssign.onclick = ()=> {
+  /* assign teams automatically */
+  const btnAutoAssign = document.getElementById('btnAutoAssign');
+  if (btnAutoAssign) btnAutoAssign.onclick = () => {
     const txt = document.getElementById('teamsText').value.trim();
-    if(!txt) return alert('أدخل أسماء الفرق.');
-    const names = txt.split('\n').map(s=>s.trim()).filter(Boolean);
+    if (!txt) return alert('أدخل أسماء الفرق.');
+    const names = txt.split('\n').map(s => s.trim()).filter(Boolean);
     const totalDeclared = parseInt(document.getElementById('inputTotal').value) || names.length;
-    if(names.length !== totalDeclared){
-    if(!confirm(`عدد الأسطر (${names.length}) لا يساوي العدد المدخل (${totalDeclared}). الاستمرار مع ${names.length}؟`))
-    return;
+    if (names.length !== totalDeclared) {
+      if (!confirm(`عدد الأسطر (${names.length}) لا يساوي العدد المدخل (${totalDeclared}). الاستمرار مع ${names.length}؟`)) return;
     }
     const groupsCount = STATE.groups.length;
-    STATE.teams = names.map(n=>({ name:n, group:null, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0 }));
+    STATE.teams = names.map(n => ({ name: n, group: null, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0 }));
     let idx = 0;
-    STATE.groups = Array.from({length:groupsCount}, ()=>[]);
-    STATE.teams.forEach(t=>{
-    const g = idx % groupsCount;
-    STATE.groups[g].push(t.name);
-    t.group = g;
-    idx++;
+    STATE.groups = Array.from({ length: groupsCount }, () => []);
+    STATE.teams.forEach(t => {
+      const g = idx % groupsCount;
+      STATE.groups[g].push(t.name);
+      t.group = g;
+      idx++;
     });
     scheduleAllGroupMatches();
     saveState();
     renderGroupsOverview();
-    document.getElementById('teamsInputCard').style.display='none';
-    document.getElementById('groupsOverview').style.display='block';
-    document.getElementById('groupDetails').style.display='none';
+    document.getElementById('teamsInputCard').style.display = 'none';
+    document.getElementById('groupsOverview').style.display = 'block';
+    document.getElementById('groupDetails').style.display = 'none';
     scrollToElement('groupsOverview');
-    }
+  }
 
-    /* manual assign opens a simple UI (inline) */
-    const btnManualAssign = document.getElementById('btnManualAssign');
-    if(btnManualAssign) btnManualAssign.onclick = ()=> {
+  /* manual assign opens a simple UI (inline) */
+  const btnManualAssign = document.getElementById('btnManualAssign');
+  if (btnManualAssign) btnManualAssign.onclick = () => {
     const txt = document.getElementById('teamsText').value.trim();
-    if(!txt) return alert('أدخل أسماء الفرق.');
-    const names = txt.split('\n').map(s=>s.trim()).filter(Boolean);
-    STATE.teams = names.map(n=>({ name:n, group:null, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0 }));
-    STATE.groups = Array.from({length:STATE.groups.length}, ()=>[]);
+    if (!txt) return alert('أدخل أسماء الفرق.');
+    const names = txt.split('\n').map(s => s.trim()).filter(Boolean);
+    STATE.teams = names.map(n => ({ name: n, group: null, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0 }));
+    STATE.groups = Array.from({ length: STATE.groups.length }, () => []);
     saveState();
-    let remaining = [...STATE.teams.map(t=>t.name)];
-    for(const name of [...remaining]){
-    let g = prompt(`أدخل رقم المجموعة (1..${STATE.groups.length}) لإضافة الفريق "${name}" أو اترك فارغ للتخطي:`);
-    if(g === null) break;
-    g = g.trim();
-    if(!g) continue;
-    const gi = parseInt(g) - 1;
-    if(isNaN(gi) || gi<0 || gi>=STATE.groups.length) { alert('رقم مجموعة غير صحيح'); continue; }
+    let remaining = [...STATE.teams.map(t => t.name)];
+    for (const name of [...remaining]) {
+      let g = prompt(`أدخل رقم المجموعة (1..${STATE.groups.length}) لإضافة الفريق "${name}" أو اترك فارغ للتخطي:`);
+      if (g === null) break;
+      g = g.trim();
+      if (!g) continue;
+      const gi = parseInt(g) - 1;
+      if (isNaN(gi) || gi < 0 || gi >= STATE.groups.length) { alert('رقم مجموعة غير صحيح'); continue; }
       STATE.groups[gi].push(name);
-      STATE.teams.find(t=>t.name===name).group = gi;
-      }
-      scheduleAllGroupMatches();
-      saveState();
-      renderGroupsOverview();
-      document.getElementById('teamsInputCard').style.display='none';
-      document.getElementById('groupsOverview').style.display='block';
-      scrollToElement('groupsOverview');
-      }
+      STATE.teams.find(t => t.name === name).group = gi;
+    }
+    scheduleAllGroupMatches();
+    saveState();
+    renderGroupsOverview();
+    document.getElementById('teamsInputCard').style.display = 'none';
+    document.getElementById('groupsOverview').style.display = 'block';
+    scrollToElement('groupsOverview');
+  }
 
-      /* render groups overview */
-      function renderGroupsOverview(){
-      const list = document.getElementById('groupsList');
-      if(!list) return;
-      list.innerHTML = '';
-      STATE.groups.forEach((g, i)=>{
-      const div = document.createElement('div'); div.className='group-card';
-      div.innerHTML = `<strong>المجموعة ${String.fromCharCode(65+i)}</strong>
-      <div class="small muted">${g.length} فريق</div>`;
-      div.onclick = ()=> showGroupDetails(i);
+  /* render groups overview */
+  function renderGroupsOverview() {
+    const list = document.getElementById('groupsList');
+    if (!list) return;
+    list.innerHTML = '';
+    STATE.groups.forEach((g, i) => {
+      const div = document.createElement('div'); div.className = 'group-card';
+      div.innerHTML = `<strong>المجموعة ${String.fromCharCode(65 + i)}</strong><div class="small muted">${g.length} فريق</div>`;
+      div.onclick = () => showGroupDetails(i);
       list.appendChild(div);
-      });
+    });
+  }
+
+  /* schedule round-robin matches for each group */
+  function scheduleAllGroupMatches() {
+    STATE.groupMatches = STATE.groupMatches || [];
+    STATE.groupMatches = [];
+    let id = 1;
+    STATE.groups.forEach((grp, gi) => {
+      for (let i = 0; i < grp.length; i++) {
+        for (let j = i + 1; j < grp.length; j++) {
+          STATE.groupMatches.push({ id: id++, group: gi, home: grp[i], away: grp[j], hg: 0, ag: 0, finished: false });
+        }
       }
+    });
+  }
 
-      /* schedule round-robin matches for each group */
-      function scheduleAllGroupMatches(){
-      STATE.groupMatches = STATE.groupMatches || [];
-      STATE.groupMatches = [];
-      let id = 1;
-      STATE.groups.forEach((grp, gi)=>{
-      for(let i=0;i<grp.length;i++){ for(let j=i+1;j<grp.length;j++){ STATE.groupMatches.push({ id: id++, group: gi,
-        home: grp[i], away: grp[j], hg:0, ag:0, finished:false }); } } }); } /* show details of a group */ function
-        showGroupDetails(gi){ const teams=STATE.groups[gi] || [];
-        document.getElementById('groupTitle').textContent=`المجموعة ${String.fromCharCode(65+gi)}`;
-        document.getElementById('groupTeamsLine').textContent=teams.join(' — ') || ' لا توجد فرق'; const
-        matchesDiv=document.getElementById('groupMatches'); matchesDiv.innerHTML='' ; const
-        matches=STATE.groupMatches.filter(m=> m.group === gi);
-        if(matches.length === 0) matchesDiv.innerHTML = '<div class="small muted">لا توجد مباريات مجدولة.</div>';
-        matches.forEach(m=>{
-        const d = document.createElement('div'); d.className='match';
-        d.innerHTML = `<div class="teams">${m.home} <span style="opacity:0.6">vs</span> ${m.away}</div>
-        <div>
-          ${m.finished ? `<span class="small muted">${m.hg} - ${m.ag}</span>` : `<button class="primary inline"
-            data-id="${m.id}">إنهاء الماتش</button>`}
-          <button class="ghost inline" data-edit="${m.id}">تعديل</button>
-        </div>`;
-        matchesDiv.appendChild(d);
-        });
-        matchesDiv.querySelectorAll('button.primary').forEach(b=>{
-        b.onclick = ()=> { const id = parseInt(b.dataset.id); endGroupMatch(id); };
-        });
-        matchesDiv.querySelectorAll('button.ghost').forEach(b=>{
-        b.onclick = ()=> { const id = parseInt(b.dataset.edit); editMatchTeams(id); };
-        });
-        renderGroupTable(gi);
-        document.getElementById('groupDetails').style.display='block';
-        scrollToElement('groupDetails');
-        }
+  /* show details of a group */
+  function showGroupDetails(gi) {
+    const teams = STATE.groups[gi] || [];
+    document.getElementById('groupTitle').textContent = `المجموعة ${String.fromCharCode(65 + gi)}`;
+    document.getElementById('groupTeamsLine').textContent = teams.join(' — ') || 'لا توجد فرق';
+    const matchesDiv = document.getElementById('groupMatches'); matchesDiv.innerHTML = '';
+    const matches = STATE.groupMatches.filter(m => m.group === gi);
+    if (matches.length === 0) matchesDiv.innerHTML = '<div class="small muted">لا توجد مباريات مجدولة.</div>';
+    matches.forEach(m => {
+      const d = document.createElement('div'); d.className = 'match';
+      d.innerHTML = `<div class="teams">${m.home} <span style="opacity:0.6">vs</span> ${m.away}</div>
+                   <div>
+                     ${m.finished ? `<span class="small muted">${m.hg} - ${m.ag}</span>` : `<button class="primary inline" data-id="${m.id}">إنهاء الماتش</button>`}
+                     <button class="ghost inline" data-edit="${m.id}">تعديل</button>
+                   </div>`;
+      matchesDiv.appendChild(d);
+    });
+    matchesDiv.querySelectorAll('button.primary').forEach(b => {
+      b.onclick = () => { const id = parseInt(b.dataset.id); endGroupMatch(id); };
+    });
+    matchesDiv.querySelectorAll('button.ghost').forEach(b => {
+      b.onclick = () => { const id = parseInt(b.dataset.edit); editMatchTeams(id); };
+    });
+    renderGroupTable(gi);
+    document.getElementById('groupDetails').style.display = 'block';
+    scrollToElement('groupDetails');
+  }
 
-        /* end group match with prompt for goals */
-        function endGroupMatch(matchId){
-        const m = STATE.groupMatches.find(x=>x.id===matchId);
-        if(!m) return alert('مباراة غير موجودة');
-        const hg = prompt(`أهداف ${m.home}:`, m.hg || 0);
-        if(hg === null) return;
-        const ag = prompt(`أهداف ${m.away}:`, m.ag || 0);
-        if(ag === null) return;
-        m.hg = parseInt(hg) || 0; m.ag = parseInt(ag) || 0; m.finished = true;
-        recomputeTeamsFromMatches();
-        saveState();
-        showGroupDetails(m.group);
-        renderDashboard();
-        }
+  /* end group match with prompt for goals */
+  function endGroupMatch(matchId) {
+    const m = STATE.groupMatches.find(x => x.id === matchId);
+    if (!m) return alert('مباراة غير موجودة');
+    const hg = prompt(`أهداف ${m.home}:`, m.hg || 0);
+    if (hg === null) return;
+    const ag = prompt(`أهداف ${m.away}:`, m.ag || 0);
+    if (ag === null) return;
+    m.hg = parseInt(hg) || 0; m.ag = parseInt(ag) || 0; m.finished = true;
+    recomputeTeamsFromMatches();
+    saveState();
+    showGroupDetails(m.group);
+    renderDashboard();
+  }
 
-        /* edit teams in a match */
-        function editMatchTeams(matchId){
-        const m = STATE.groupMatches.find(x=>x.id===matchId);
-        if(!m) return alert('مباراة غير موجودة');
-        const h = prompt('اسم الفريق الأول:', m.home || '');
-        const a = prompt('اسم الفريق الثاني:', m.away || '');
-        if(h===null || a===null) return;
-        m.home = h.trim() || m.home; m.away = a.trim() || m.away;
-        saveState();
-        showGroupDetails(m.group);
-        }
+  /* edit teams in a match */
+  function editMatchTeams(matchId) {
+    const m = STATE.groupMatches.find(x => x.id === matchId);
+    if (!m) return alert('مباراة غير موجودة');
+    const h = prompt('اسم الفريق الأول:', m.home || '');
+    const a = prompt('اسم الفريق الثاني:', m.away || '');
+    if (h === null || a === null) return;
+    m.home = h.trim() || m.home; m.away = a.trim() || m.away;
+    saveState();
+    showGroupDetails(m.group);
+  }
 
-        /* recompute all teams stats from finished matches */
-        function recomputeTeamsFromMatches(){
-        const names = new Set();
-        STATE.groups.forEach(g=>g.forEach(n=>names.add(n)));
-        (STATE.groupMatches||[]).forEach(m=>{ names.add(m.home); names.add(m.away); });
-        STATE.teams = Array.from(names).map(n=>{
-        const existing = (STATE.teams||[]).find(t=>t.name===n);
-        if(existing) return { ...{name:n,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0,group: existing.group ??
-        findGroupOfTeam(n) }, ...existing, played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0 };
-        return { name:n, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0, group: findGroupOfTeam(n) };
-        });
-        STATE.teams.forEach(t=>{ t.played=0; t.win=0; t.draw=0; t.loss=0; t.gf=0; t.ga=0; t.pts=0; });
-        (STATE.groupMatches||[]).filter(m=>m.finished).forEach(m=>{
-        const H = STATE.teams.find(t=>t.name===m.home);
-        const A = STATE.teams.find(t=>t.name===m.away);
-        if(!H || !A) return;
+  /* recompute all teams stats from finished matches */
+  function recomputeTeamsFromMatches() {
+    const names = new Set();
+    STATE.groups.forEach(g => g.forEach(n => names.add(n)));
+    (STATE.groupMatches || []).forEach(m => { names.add(m.home); names.add(m.away); });
+    STATE.teams = Array.from(names).map(n => {
+      const existing = (STATE.teams || []).find(t => t.name === n);
+      if (existing) return { ...{ name: n, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0, group: existing.group ?? findGroupOfTeam(n) }, ...existing, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0 };
+      return { name: n, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0, group: findGroupOfTeam(n) };
+    });
+    STATE.teams.forEach(t => { t.played = 0; t.win = 0; t.draw = 0; t.loss = 0; t.gf = 0; t.ga = 0; t.pts = 0; });
+    (STATE.groupMatches || []).filter(m => m.finished).forEach(m => {
+      const H = STATE.teams.find(t => t.name === m.home);
+      const A = STATE.teams.find(t => t.name === m.away);
+      if (!H || !A) return;
+      H.played++; A.played++;
+      H.gf += m.hg; H.ga += m.ag;
+      A.gf += m.ag; A.ga += m.hg;
+      if (m.hg > m.ag) { H.win++; H.pts += 3; A.loss++; }
+      else if (m.hg < m.ag) { A.win++; A.pts += 3; H.loss++; }
+      else { H.draw++; A.draw++; H.pts++; A.pts++; }
+    });
+    if (STATE.knockout && STATE.knockout.rounds) {
+      STATE.knockout.rounds.flat().filter(s => s && s.finished && s.home && s.away).forEach(s => {
+        const H = STATE.teams.find(t => t.name === s.home) || { name: s.home, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0 };
+        const A = STATE.teams.find(t => t.name === s.away) || { name: s.away, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0 };
+        if (!STATE.teams.find(t => t.name === s.home)) STATE.teams.push(H);
+        if (!STATE.teams.find(t => t.name === s.away)) STATE.teams.push(A);
         H.played++; A.played++;
-        H.gf += m.hg; H.ga += m.ag;
-        A.gf += m.ag; A.ga += m.hg;
-        if(m.hg > m.ag){ H.win++; H.pts += 3; A.loss++; }
-        else if(m.hg < m.ag){ A.win++; A.pts +=3; H.loss++; } else { H.draw++; A.draw++; H.pts++; A.pts++; } });
-          if(STATE.knockout && STATE.knockout.rounds){ STATE.knockout.rounds.flat().filter(s=>s && s.finished && s.home
-          && s.away).forEach(s=>{
-          const H = STATE.teams.find(t=>t.name===s.home) || {name:s.home,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0};
-          const A = STATE.teams.find(t=>t.name===s.away) || {name:s.away,played:0,win:0,draw:0,loss:0,gf:0,ga:0,pts:0};
-          if(!STATE.teams.find(t=>t.name===s.home)) STATE.teams.push(H);
-          if(!STATE.teams.find(t=>t.name===s.away)) STATE.teams.push(A);
-          H.played++; A.played++;
-          H.gf += s.hg; H.ga += s.ag;
-          A.gf += s.ag; A.ga += s.hg;
-          if(s.hg > s.ag){ H.win++; H.pts += 3; A.loss++; }
-          else if(s.hg < s.ag){ A.win++; A.pts +=3; H.loss++; } else { H.draw++; A.draw++; H.pts++; A.pts++; } }); } }
-            /* find group index of a team */ function findGroupOfTeam(name){ for(let i=0;i<STATE.groups.length;i++){
-            if(STATE.groups[i].includes(name)) return i; } return null; } /* render group table */ function
-            renderGroupTable(gi){ recomputeTeamsFromMatches(); const tbody=document.querySelector('#groupTable tbody');
-            if(!tbody) return; tbody.innerHTML='' ; const groupNames=STATE.groups[gi] || []; const
-            rows=STATE.teams.filter(t=>t.group === gi).map(t=>({ ...t, gd: t.gf - t.ga }));
-            if(rows.length === 0 && groupNames.length>0){
-            groupNames.forEach((n,idx)=> tbody.innerHTML += `<tr>
-              <td>${idx+1}</td>
-              <td>${n}</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>`);
-            return;
-            }
-            rows.sort((a,b)=> b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf || a.name.localeCompare(b.name));
-            rows.forEach((r, i)=>{
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${i+1}</td>
-            <td>${r.name}</td>
-            <td>${r.played}</td>
-            <td>${r.win}</td>
-            <td>${r.draw}</td>
-            <td>${r.loss}</td>
-            <td>${r.gf}</td>
-            <td>${r.ga}</td>
-            <td>${r.gf - r.ga}</td>
-            <td>${r.pts}</td>`;
-            tbody.appendChild(tr);
-            });
-            }
-
-            /* ---------- Bracket building & rendering ---------- */
-            const btnBuildBracket = document.getElementById('btnBuildBracket');
-            if(btnBuildBracket) btnBuildBracket.onclick = ()=> {
-            const qual = parseInt(document.getElementById('qualifyCount').value) || 1;
-            recomputeTeamsFromMatches();
-            const qualifiers = [];
-            STATE.groups.forEach((grp, gi)=>{
-            const stats = (STATE.teams.filter(t=>t.group===gi) || []).slice();
-            stats.sort((a,b)=> b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf);
-            for(let i=0;i<qual && i<stats.length;i++) qualifiers.push(stats[i].name); }); if(qualifiers.length < 2)
-              return alert('لا يوجد عدد كافٍ من المتأهلين.'); buildKnockout(qualifiers); renderBracketArea();
-              document.querySelector('[data-tab="tab-bracket" ]').click(); saveState(); }; function
-              buildKnockout(qualifiers){ let n=qualifiers.length; let pow=1; while(pow < n) pow *=2; const slots=pow /
-              2; const rounds=[]; const first=[]; for(let i=0;i<slots;i++){ const a=qualifiers[i] || null; const
-              b=qualifiers[qualifiers.length - 1 - i] || null; first.push({ home: a, away: b, hg:0, ag:0,
-              finished:false, id:`r0s${i}` }); } rounds.push(first); let rem=slots / 2; let r=1; while(rem>= 1){
-              rounds.push(Array.from({length:rem}, (_,i)=>({ home:null, away:null, hg:0, ag:0, finished:false,
-              id:`r${r}s${i}`})));
-              rem = Math.floor(rem/2); r++;
-              }
-              STATE.knockout = { rounds };
-              }
-
-              /* render bracket area */
-              function renderBracketArea(){
-              const area = document.getElementById('bracketArea'); if(!area) return; area.innerHTML = '';
-              if(!STATE.knockout || !STATE.knockout.rounds){ area.innerHTML = '<div class="small muted">لا توجد شجرة
-                حالياً — أنشأ المتأهلين ثم اضغط بناء الشجرة.</div>'; return; }
-              const rounds = STATE.knockout.rounds;
-              rounds.forEach((rnd, ri)=>{
-              const col = document.createElement('div'); col.className = 'bracket-col';
-              const title = document.createElement('div'); title.style.fontWeight='700'; title.textContent = ri ===
-              rounds.length-1 ? 'النهائي' : `دور ${ri+1}`;
-              col.appendChild(title);
-              rnd.forEach(slot=>{
-              const box = document.createElement('div'); box.className='slot';
-              const h = slot.home || '—'; const a = slot.away || '—';
-              box.innerHTML = `<div class="team">${h}</div>
-              <div style="opacity:0.6;margin:6px 0">vs</div>
-              <div class="team">${a}</div>
-              <div class="controls">
-                <button class="primary" data-id="${slot.id}">إنهاء الماتش</button>
-                <button class="ghost" data-edit="${slot.id}">تعديل</button>
-              </div>`;
-              col.appendChild(box);
-              });
-              area.appendChild(col);
-              });
-              document.querySelectorAll('.slot .primary').forEach(b=>{
-              b.onclick = ()=> {
-              const id = b.dataset.id;
-              const slot = findKnockoutSlotById(id);
-              if(!slot) return alert('خطأ');
-              if(!slot.home || !slot.away) return alert('حدد كلا الفريقين أولاً');
-              const hg = prompt(`أهداف ${slot.home}:`, slot.hg || 0);
-              if(hg === null) return;
-              const ag = prompt(`أهداف ${slot.away}:`, slot.ag || 0);
-              if(ag === null) return;
-              slot.hg = parseInt(hg)||0; slot.ag = parseInt(ag)||0; slot.finished = true;
-              recomputeTeamsFromMatches();
-              const winner = slot.hg > slot.ag ? slot.home : (slot.hg < slot.ag ? slot.away : null); if(winner)
-                advanceKnockout(slot.id, winner); saveState(); renderBracketArea(); renderDashboard(); }; });
-                document.querySelectorAll('.slot .ghost').forEach(b=>{
-                b.onclick = ()=> {
-                const id = b.dataset.edit; const slot = findKnockoutSlotById(id);
-                if(!slot) return;
-                const h = prompt('اسم الفريق الأول:', slot.home || '');
-                const a = prompt('اسم الفريق الثاني:', slot.away || '');
-                if(h === null || a === null) return;
-                slot.home = h.trim() || slot.home; slot.away = a.trim() || slot.away;
-                saveState(); renderBracketArea();
-                };
-                });
-                }
-                function findKnockoutSlotById(id){
-                if(!STATE.knockout) return null;
-                for(const rnd of STATE.knockout.rounds) for(const s of rnd) if(s.id === id) return s;
-                return null;
-                }
-                function advanceKnockout(slotId, winner){
-                for(let r=0;r<STATE.knockout.rounds.length;r++){ const idx=STATE.knockout.rounds[r].findIndex(s=>s.id
-                  === slotId);
-                  if(idx !== -1){
-                  const next = r+1;
-                  if(next < STATE.knockout.rounds.length){ const target=STATE.knockout.rounds[next][Math.floor(idx/2)];
-                    if(!target.home) target.home=winner; else if(!target.away) target.away=winner; else
-                    target.home=winner; saveState(); } else { alert('الفائز النهائي: ' + winner);
-      }
-      break;
+        H.gf += s.hg; H.ga += s.ag;
+        A.gf += s.ag; A.ga += s.hg;
+        if (s.hg > s.ag) { H.win++; H.pts += 3; A.loss++; }
+        else if (s.hg < s.ag) { A.win++; A.pts += 3; H.loss++; }
+        else { H.draw++; A.draw++; H.pts++; A.pts++; }
+      });
     }
   }
-}
 
-/* ---------- Dashboard rendering ---------- */
-function renderDashboard(){
-  recomputeTeamsFromMatches();
-  const winnersBody = document.querySelector(' #winnersTable tbody'); if(winnersBody) winnersBody.innerHTML='' ; const
-                    losersBody=document.querySelector('#losersTable tbody'); if(losersBody) losersBody.innerHTML='' ;
-                    const arr=STATE.teams.slice(); const winners=arr.filter(t=>t.win > t.loss).sort((a,b)=>b.pts -
-                    a.pts);
-                    const losers = arr.filter(t=>t.loss > t.win).sort((a,b)=>b.loss - a.loss);
-                    winners.forEach(w=> { if(winnersBody) winnersBody.innerHTML += `<tr class="winner">
-                      <td>${w.name}</td>
-                      <td>${w.win}</td>
-                      <td>${w.pts}</td>
-                    </tr>`; });
-                    losers.forEach(l=> { if(losersBody) losersBody.innerHTML += `<tr class="loser">
-                      <td>${l.name}</td>
-                      <td>${l.loss}</td>
-                      <td>${l.pts}</td>
-                    </tr>`; });
-                    const groupsTables = document.getElementById('groupsTables'); if(!groupsTables) return;
-                    groupsTables.innerHTML = '';
-                    STATE.groups.forEach((grp, gi)=>{
-                    const box = document.createElement('div'); box.style.minWidth='320px'; box.style.flex='1';
-                    let rows = STATE.teams.filter(t=>t.group === gi).map(t=>({...t, gd: t.gf - t.ga}));
-                    if(rows.length === 0){
-                    rows = grp.map(n=>({ name:n, played:0, win:0, draw:0, loss:0, gf:0, ga:0, pts:0, gd:0 }));
-                    } else {
-                    rows.sort((a,b)=> b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf);
-                    }
-                    box.innerHTML = `<div class="card">
-                      <h4 class="center">المجموعة ${String.fromCharCode(65+gi)}</h4>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>الفريق</th>
-                            <th>نقاط</th>
-                            <th>له</th>
-                            <th>عليه</th>
-                            <th>فرق</th>
-                          </tr>
-                        </thead>
-                        <tbody>${rows.map(r=>`<tr>
-                            <td>${r.name}</td>
-                            <td>${r.pts}</td>
-                            <td>${r.gf}</td>
-                            <td>${r.ga}</td>
-                            <td>${r.gf - r.ga}</td>
-                          </tr>`).join('')}</tbody>
-                      </table>
-                    </div>`;
-                    groupsTables.appendChild(box);
-                    });
-                    }
+  /* find group index of a team */
+  function findGroupOfTeam(name) {
+    for (let i = 0; i < STATE.groups.length; i++) {
+      if (STATE.groups[i].includes(name)) return i;
+    }
+    return null;
+  }
 
-                    /* ---------- helpers & lifecycle ---------- */
-                    function scrollToElement(id){ const el = document.getElementById(id); if(el)
-                    el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  /* render group table */
+  function renderGroupTable(gi) {
+    recomputeTeamsFromMatches();
+    const tbody = document.querySelector('#groupTable tbody'); if (!tbody) return; tbody.innerHTML = '';
+    const groupNames = STATE.groups[gi] || [];
+    const rows = STATE.teams.filter(t => t.group === gi).map(t => ({ ...t, gd: t.gf - t.ga }));
+    if (rows.length === 0 && groupNames.length > 0) {
+      groupNames.forEach((n, idx) => tbody.innerHTML += `<tr><td>${idx + 1}</td><td>${n}</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>`);
+      return;
+    }
+    rows.sort((a, b) => b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf || a.name.localeCompare(b.name));
+    rows.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${i + 1}</td><td>${r.name}</td><td>${r.played}</td><td>${r.win}</td><td>${r.draw}</td><td>${r.loss}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gf - r.ga}</td><td>${r.pts}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
 
-                    /* initial load */
-                    (function init(){
-                    const loaded = loadState();
-                    if(!loaded){
-                    STATE = { teams: [], groups: [], groupMatches: [], knockout: null };
-                    } else {
-                    renderGroupsOverview();
-                    }
-                    })();
+  /* ---------- Bracket building & rendering ---------- */
+  const btnBuildBracket = document.getElementById('btnBuildBracket');
+  if (btnBuildBracket) btnBuildBracket.onclick = () => {
+    const qual = parseInt(document.getElementById('qualifyCount').value) || 1;
+    recomputeTeamsFromMatches();
+    const qualifiers = [];
+    STATE.groups.forEach((grp, gi) => {
+      const stats = (STATE.teams.filter(t => t.group === gi) || []).slice();
+      stats.sort((a, b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf);
+      for (let i = 0; i < qual && i < stats.length; i++) qualifiers.push(stats[i].name);
+    });
+    if (qualifiers.length < 2) return alert('لا يوجد عدد كافٍ من المتأهلين.');
+    buildKnockout(qualifiers);
+    renderBracketArea();
+    document.querySelector('[data-tab="tab-bracket"]').click();
+    saveState();
+  };
 
-                    /* save/load buttons */
-                    const saveBtnEl = document.getElementById('saveBtn');
-                    if(saveBtnEl) saveBtnEl.addEventListener('click', saveState);
-                    const loadBtnEl = document.getElementById('loadBtn');
-                    if(loadBtnEl) loadBtnEl.addEventListener('click', ()=> { if(!loadState()) alert('لا توجد بيانات
-                    محفوظة.'); });
+  function buildKnockout(qualifiers) {
+    let n = qualifiers.length; let pow = 1; while (pow < n) pow *= 2;
+    const slots = pow / 2;
+    const rounds = [];
+    const first = [];
+    for (let i = 0; i < slots; i++) {
+      const a = qualifiers[i] || null;
+      const b = qualifiers[qualifiers.length - 1 - i] || null;
+      first.push({ home: a, away: b, hg: 0, ag: 0, finished: false, id: `r0s${i}` });
+    }
+    rounds.push(first);
+    let rem = slots / 2; let r = 1;
+    while (rem >= 1) {
+      rounds.push(Array.from({ length: rem }, (_, i) => ({ home: null, away: null, hg: 0, ag: 0, finished: false, id: `r${r}s${i}` })));
+      rem = Math.floor(rem / 2); r++;
+    }
+    STATE.knockout = { rounds };
+  }
 
-                    /* render after load (populate UI) */
-                    function renderAfterLoad(){
-                    if(!STATE) return;
-                    if(STATE.groups && STATE.groups.length > 0){
-                    document.getElementById('groupsOverview').style.display='block';
-                    renderGroupsOverview();
-                    }
-                    if(!STATE.groupMatches || STATE.groupMatches.length === 0){
-                    scheduleAllGroupMatches();
-                    saveState();
-                    }
-                    renderDashboard();
-                    }
+  /* render bracket area */
+  function renderBracketArea() {
+    const area = document.getElementById('bracketArea'); if (!area) return; area.innerHTML = '';
+    if (!STATE.knockout || !STATE.knockout.rounds) { area.innerHTML = '<div class="small muted">لا توجد شجرة حالياً — أنشأ المتأهلين ثم اضغط بناء الشجرة.</div>'; return; }
+    const rounds = STATE.knockout.rounds;
+    rounds.forEach((rnd, ri) => {
+      const col = document.createElement('div'); col.className = 'bracket-col';
+      const title = document.createElement('div'); title.style.fontWeight = '700'; title.textContent = ri === rounds.length - 1 ? 'النهائي' : `دور ${ri + 1}`;
+      col.appendChild(title);
+      rnd.forEach(slot => {
+        const box = document.createElement('div'); box.className = 'slot';
+        const h = slot.home || '—'; const a = slot.away || '—';
+        box.innerHTML = `<div class="team">${h}</div><div style="opacity:0.6;margin:6px 0">vs</div><div class="team">${a}</div>
+        <div class="controls">
+          <button class="primary" data-id="${slot.id}">إنهاء الماتش</button>
+          <button class="ghost" data-edit="${slot.id}">تعديل</button>
+        </div>`;
+        col.appendChild(box);
+      });
+      area.appendChild(col);
+    });
+    document.querySelectorAll('.slot .primary').forEach(b => {
+      b.onclick = () => {
+        const id = b.dataset.id;
+        const slot = findKnockoutSlotById(id);
+        if (!slot) return alert('خطأ');
+        if (!slot.home || !slot.away) return alert('حدد كلا الفريقين أولاً');
+        const hg = prompt(`أهداف ${slot.home}:`, slot.hg || 0);
+        if (hg === null) return;
+        const ag = prompt(`أهداف ${slot.away}:`, slot.ag || 0);
+        if (ag === null) return;
+        slot.hg = parseInt(hg) || 0; slot.ag = parseInt(ag) || 0; slot.finished = true;
+        recomputeTeamsFromMatches();
+        const winner = slot.hg > slot.ag ? slot.home : (slot.hg < slot.ag ? slot.away : null);
+        if (winner) advanceKnockout(slot.id, winner);
+        saveState();
+        renderBracketArea();
+        renderDashboard();
+      };
+    });
+    document.querySelectorAll('.slot .ghost').forEach(b => {
+      b.onclick = () => {
+        const id = b.dataset.edit; const slot = findKnockoutSlotById(id);
+        if (!slot) return;
+        const h = prompt('اسم الفريق الأول:', slot.home || '');
+        const a = prompt('اسم الفريق الثاني:', slot.away || '');
+        if (h === null || a === null) return;
+        slot.home = h.trim() || slot.home; slot.away = a.trim() || slot.away;
+        saveState(); renderBracketArea();
+      };
+    });
+  }
+  function findKnockoutSlotById(id) {
+    if (!STATE.knockout) return null;
+    for (const rnd of STATE.knockout.rounds) for (const s of rnd) if (s.id === id) return s;
+    return null;
+  }
+  function advanceKnockout(slotId, winner) {
+    for (let r = 0; r < STATE.knockout.rounds.length; r++) {
+      const idx = STATE.knockout.rounds[r].findIndex(s => s.id === slotId);
+      if (idx !== -1) {
+        const next = r + 1;
+        if (next < STATE.knockout.rounds.length) {
+          const target = STATE.knockout.rounds[next][Math.floor(idx / 2)];
+          if (!target.home) target.home = winner;
+          else if (!target.away) target.away = winner;
+          else target.home = winner;
+          saveState();
+        } else {
+          alert('الفائز النهائي: ' + winner);
+        }
+        break;
+      }
+    }
+  }
 
-                    /* ensure recompute / render when tab changed manually to dashboard */
-                    const tbDash = document.querySelector('[data-tab="tab-dashboard"]');
-                    if(tbDash) tbDash.addEventListener('click', ()=> renderDashboard());
+  /* ---------- Dashboard rendering ---------- */
+  function renderDashboard() {
+    recomputeTeamsFromMatches();
+    const winnersBody = document.querySelector('#winnersTable tbody'); if (winnersBody) winnersBody.innerHTML = '';
+    const losersBody = document.querySelector('#losersTable tbody'); if (losersBody) losersBody.innerHTML = '';
+    const arr = STATE.teams.slice();
+    const winners = arr.filter(t => t.win > t.loss).sort((a, b) => b.pts - a.pts);
+    const losers = arr.filter(t => t.loss > t.win).sort((a, b) => b.loss - a.loss);
+    winners.forEach(w => { if (winnersBody) winnersBody.innerHTML += `<tr class="winner"><td>${w.name}</td><td>${w.win}</td><td>${w.pts}</td></tr>`; });
+    losers.forEach(l => { if (losersBody) losersBody.innerHTML += `<tr class="loser"><td>${l.name}</td><td>${l.loss}</td><td>${l.pts}</td></tr>`; });
+    const groupsTables = document.getElementById('groupsTables'); if (!groupsTables) return; groupsTables.innerHTML = '';
+    STATE.groups.forEach((grp, gi) => {
+      const box = document.createElement('div'); box.style.minWidth = '320px'; box.style.flex = '1';
+      let rows = STATE.teams.filter(t => t.group === gi).map(t => ({ ...t, gd: t.gf - t.ga }));
+      if (rows.length === 0) {
+        rows = grp.map(n => ({ name: n, played: 0, win: 0, draw: 0, loss: 0, gf: 0, ga: 0, pts: 0, gd: 0 }));
+      } else {
+        rows.sort((a, b) => b.pts - a.pts || (b.gd - a.gd) || b.gf - a.gf);
+      }
+      box.innerHTML = `<div class="card"><h4 class="center">المجموعة ${String.fromCharCode(65 + gi)}</h4>
+      <table><thead><tr><th>الفريق</th><th>نقاط</th><th>له</th><th>عليه</th><th>فرق</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td>${r.name}</td><td>${r.pts}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gf - r.ga}</td></tr>`).join('')}</tbody></table></div>`;
+      groupsTables.appendChild(box);
+    });
+  }
 
-                    /* ===== End of embedded original app code ===== */
+  /* ---------- helpers & lifecycle ---------- */
+  function scrollToElement(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
-                    </script>
+  /* initial load */
+  (function init() {
+    const loaded = loadState();
+    if (!loaded) {
+      STATE = { teams: [], groups: [], groupMatches: [], knockout: null };
+    } else {
+      renderGroupsOverview();
+    }
+  })();
+
+  /* save/load buttons */
+  const saveBtnEl = document.getElementById('saveBtn');
+  if (saveBtnEl) saveBtnEl.addEventListener('click', saveState);
+  const loadBtnEl = document.getElementById('loadBtn');
+  if (loadBtnEl) loadBtnEl.addEventListener('click', () => { if (!loadState()) alert('لا توجد بيانات محفوظة.'); });
+
+  /* render after load (populate UI) */
+  function renderAfterLoad() {
+    if (!STATE) return;
+    if (STATE.groups && STATE.groups.length > 0) {
+      document.getElementById('groupsOverview').style.display = 'block';
+      renderGroupsOverview();
+    }
+    if (!STATE.groupMatches || STATE.groupMatches.length === 0) {
+      scheduleAllGroupMatches();
+      saveState();
+    }
+    renderDashboard();
+  }
+
+  /* ensure recompute / render when tab changed manually to dashboard */
+  const tbDash = document.querySelector('[data-tab="tab-dashboard"]');
+  if (tbDash) tbDash.addEventListener('click', () => renderDashboard());
+
+  /* ===== End of embedded original app code ===== */
+
+</script>
 </body>
 
 </html>

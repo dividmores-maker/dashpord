@@ -1,3 +1,8 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import { getdatabase } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC07fg1eWmIlWhq-aVKwIE3YJEsDl8oH_M",
     authDomain: "divid-mores.firebaseapp.com",
@@ -8,10 +13,9 @@ const firebaseConfig = {
     appId: "1:96902794085:web:38711681e4f7251cbf2f8c"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
 
-if (app) {
-    console.log("firebase init done")
-} else {
-    console.log("firebase init error")
-}
+const app = initializeApp(firebaseConfig);
+const database = getdatabase(firebaseConfig);
+
+export { database };
